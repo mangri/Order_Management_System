@@ -60,7 +60,7 @@ namespace Order_Management_System
                 int furtherAction = (int)Console.ReadLine();
                 if(48 < furtherAction < 54)
                 {
-                    
+                    return furtherAction;
                 }
                 
             }
