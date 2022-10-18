@@ -47,14 +47,25 @@ namespace Order_Management_System
             // New order
             // switch for full report or particular client
         }
-        public int AskingUserForInput()
+        private static int AskingUserForInput()
         {
-            Console.WriteLine("Chose one of the following options:");
-            Console.WriteLine("[1] Add new client");
-            Console.WriteLine("[2] Place new order");
-            Console.WriteLine("[3] Update the stock");
-            Console.WriteLine("[4] Get reports");
-            Console.WriteLine("[5] Exit");
+            while(true)
+            {
+                Console.WriteLine("Chose one of the following options:");
+                Console.WriteLine("[1] Add new client");
+                Console.WriteLine("[2] Place new order");
+                Console.WriteLine("[3] Update the stock");
+                Console.WriteLine("[4] Get reports");
+                Console.WriteLine("[5] Exit");
+                int furtherAction = (int)Console.ReadLine();
+                if(48 < furtherAction < 54)
+                {
+                    
+                }
+                
+            }
+            
+
         }
     }
 }
