@@ -15,10 +15,28 @@ namespace Order_Management_System
             while(true)
             {
                 int furtherAction = AskingUserForInput();
-            }
+                switch(furtherAction)
+                    {
+                        case 49:
 
-            // Chose one of the following options
-            // switch for: Add new client, Place new order, Update the stock, Get reports (new file for each report), Exit.
+                            break;
+                        case 50:
+
+                            break;
+                        case 51:
+
+                            break;
+                        case 52:
+
+                            break;
+                        case 53:
+                        
+                        break;
+                    }
+                
+            }
+            Console.WriteLine("")
+
             // Another request? y/n
             // each of them has a method
             // place excel files in a root folder for Visual Studio to seee those
