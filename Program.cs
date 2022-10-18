@@ -49,9 +49,9 @@ namespace Order_Management_System
         }
         private static int AskingUserForInput()
         {
-            while(true)
+            for(int i = 1; i < 6; i++)
             {
-                Console.WriteLine("Chose one of the following options:");
+                Console.WriteLine("Choose one of the following options:");
                 Console.WriteLine("[1] Add new client");
                 Console.WriteLine("[2] Place new order");
                 Console.WriteLine("[3] Update the stock");
@@ -61,6 +61,21 @@ namespace Order_Management_System
                 if(48 < furtherAction < 54)
                 {
                     return furtherAction;
+                    break;
+                }
+                else if(i < 4)
+                {
+                    Console.Clear();
+                    Console.WriteLine($"No such option. Try again ({5 - i} attempt(s) left)");
+                    continue;
+                }
+                else if(i == 4)
+                {
+                    Console.Clear();
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("The last attempt before closing the application");
+                    Console.ResetColor();
+                    continue;
                 }
                 
             }
