@@ -30,9 +30,13 @@ namespace Order_Management_System.Repositories
                         );
                 }
         }
-        public List<LaborHoursItems> Retrieve()
+        public List<Clientele> RetrieveClientList()
         {
-
+            return clients;
+        }
+        public void AddNewCliwnt()
+        {
+            
         }
     }
 }
