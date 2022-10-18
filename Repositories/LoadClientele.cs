@@ -14,6 +14,7 @@ namespace Order_Management_System.Repositories
     {
         XLWorkbook wbook = new XLWorkbook("Clientele.xlsx");
         public List<Clientele> clients { get; private set; }
+        
         public LoadClientele()
         {
             var ws = wbook.Worksheet(1);
@@ -30,12 +31,17 @@ namespace Order_Management_System.Repositories
                         );
                 }
         }
-        public List<Clientele> RetrieveClientList()
+        
+        public List<Clientele> RetrieveClientListFromExcelSheet()
         {
             return clients;
         }
-        public void AddNewCliwnt()
+        public (string, bool) AddNewClientToExcelSheet(Clientele newClient)
         {
+            // check if client exists using client list
+            // add client
+            // return message and bool if created for while cycle
+            return("created", true);
             
         }
     }
