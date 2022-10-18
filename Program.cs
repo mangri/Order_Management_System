@@ -35,9 +35,13 @@ namespace Order_Management_System
                     }
                 
             }
-            Console.WriteLine("")
+                Console.WriteLine("Proceed with one more request? y/n");
+                if ((int)Console.ReadLine() == (89 || 121))
+                {
+                    continue;
+                }
+                else break;
 
-            // Another request? y/n
             // each of them has a method
             // place excel files in a root folder for Visual Studio to seee those
             
