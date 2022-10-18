@@ -14,14 +14,9 @@ namespace Order_Management_System
         {
             while(true)
             {
-                AskingUserForInput();
+                int furtherAction = AskingUserForInput();
             }
-            Console.WriteLine("Chose one of the following options:");
-            Console.WriteLine("[1] Add new client");
-            Console.WriteLine("[2] Place new order");
-            Console.WriteLine("[3] Update the stock");
-            Console.WriteLine("[4] Get reports");
-            Console.WriteLine("[5] Exit");
+
             // Chose one of the following options
             // switch for: Add new client, Place new order, Update the stock, Get reports (new file for each report), Exit.
             // Another request? y/n
@@ -51,6 +46,15 @@ namespace Order_Management_System
             // Enter a new client
             // New order
             // switch for full report or particular client
+        }
+        public int AskingUserForInput()
+        {
+            Console.WriteLine("Chose one of the following options:");
+            Console.WriteLine("[1] Add new client");
+            Console.WriteLine("[2] Place new order");
+            Console.WriteLine("[3] Update the stock");
+            Console.WriteLine("[4] Get reports");
+            Console.WriteLine("[5] Exit");
         }
     }
 }
