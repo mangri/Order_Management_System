@@ -3,8 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using ClosedXML.Excel;
 using DocumentFormat.OpenXml.Bibliography;
+using DocumentFormat.OpenXml.Drawing;
+using DocumentFormat.OpenXml.ExtendedProperties;
 using DocumentFormat.OpenXml.Office2010.ExcelAc;
+using DocumentFormat.OpenXml.Wordprocessing;
 using Order_Management_System.Models;
+using Order_Management_System.Repositories;
+using Order_Management_System.Services;
 
 namespace Order_Management_System
 {
@@ -14,62 +19,49 @@ namespace Order_Management_System
         {
             while(true)
             {
-                int furtherAction = AskingUserForInput();
-                switch(furtherAction)
+                char validatedAction = AskingUserForInput();
+                switch (validatedAction)
                     {
-                        case 49:
-
+                        case '1':
+                        NewClientInitializer();
                             break;
-                        case 50:
-
-                            break;
-                        case 51:
-
-                            break;
-                        case 52:
-
-                            break;
-                        case 53:
-                        
+                        case '2':
+                        NewOrderInitializer();
                         break;
+                        case '3':
+                        ProductListUpdateInitializer();
+                            break;
+                        case '4':
+                        ReportInitializer();
+                            break;
+                        case '5':
+                        Environment.Exit(0);
+                        break;
+
+                        default: break;
                     }
-                
-            }
+                if(validatedAction == 'Z')
+                {
+                    Console.WriteLine("Too many attempts to connect.");
+                    Console.WriteLine("The systems was not loaded."); 
+                    Console.WriteLine("Try again later. Bye.");
+                    break;
+                }
                 Console.WriteLine("Proceed with one more request? y/n");
-                if ((int)Console.ReadLine() == (89 || 121))
+                string ifContinue = Console.ReadLine();
+                if(ifContinue == "y" || ifContinue == "Y")
                 {
                     continue;
                 }
-                else break;
-
-            // each of them has a method
-            // place excel files in a root folder for Visual Studio to seee those
-            
-            List<Clientele> clients = new List<Clientele>();
-            string path = @"C:\Users\mangri\source\repos\OrderManagementSystem\Order_Management_System\bin\Debug\net5.0\";
-            string fileNameClients = "Clientele.xlsx";
-            using var wbook = new XLWorkbook(path + fileNameClients);
-            var ws = wbook.Worksheet(1);
-            int nRow = ws.Column("A").CellsUsed().Count();
-            for (int i = 1; i <= nRow; i++)
-            {
-                    clients.Add(new Clientele(
-                        ws.Cell("A" + i.ToString()).GetValue<string>(),
-                        ws.Cell("B" + i.ToString()).GetValue<string>(),
-                        ws.Cell("C" + i.ToString()).GetValue<string>(),
-                        ws.Cell("D" + i.ToString()).GetValue<string>())
-                        );
+                else
+                {
+                    break;
+                }
             }
-            foreach (Clientele client in clients)
-            {
-                Console.WriteLine(client.ClientAddressBlock);
-            }
-
-            // Enter a new client
-            // New order
-            // switch for full report or particular client
+            Console.WriteLine("Exiting application..");
+            Console.ReadLine();
         }
-        private static int AskingUserForInput()
+        private static char AskingUserForInput()
         {
             for(int i = 1; i < 6; i++)
             {
@@ -79,30 +71,87 @@ namespace Order_Management_System
                 Console.WriteLine("[3] Update the stock");
                 Console.WriteLine("[4] Get reports");
                 Console.WriteLine("[5] Exit");
-                int furtherAction = (int)Console.ReadLine();
-                if(48 < furtherAction < 54)
+                string furtherAction = Console.ReadLine();
+                char validatedAction;
+                bool goodToGo = Char.TryParse(furtherAction, out validatedAction);
+                if(goodToGo && '0' < validatedAction && validatedAction < '6')
                 {
-                    return furtherAction;
-                    break;
+                    return validatedAction;
                 }
                 else if(i < 4)
                 {
-                    Console.Clear();
+                    //Console.Clear();
                     Console.WriteLine($"No such option. Try again ({5 - i} attempt(s) left)");
-                    continue;
                 }
                 else if(i == 4)
                 {
-                    Console.Clear();
+                    //Console.Clear();
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("The last attempt before closing the application");
                     Console.ResetColor();
-                    continue;
                 }
-                
             }
-            
-
+            return 'Z';
+        }
+        private static void NewClientInitializer()
+        {
+            LoadClientele loadClientele = new LoadClientele();
+            bool ifCreated = loadClientele.AddNewClientToExcelSheet();
+            if(ifCreated)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Client database was successfully updated");
+                Console.ResetColor();
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("New client initiation was declined");
+                Console.ResetColor();
+            }
+        }
+        private static void ProductListUpdateInitializer()
+        {
+            LoadProducts loadProducts = new LoadProducts();
+            bool ifUpdated = loadProducts.UpdateProductListInExcelSheet();
+            if (ifUpdated)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Product database was successfully updated");
+                Console.ResetColor();
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Update of products in stock was declined");
+                Console.ResetColor();
+            }
+        }
+        private static void NewOrderInitializer()
+        {
+            LoadOrders loadOrders = new LoadOrders();
+            bool ifOrderMade = loadOrders.AddNewOrderToExcelSheet();
+            if (ifOrderMade)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("The order went through successfully");
+                Console.ResetColor();
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("The order was not made");
+                Console.ResetColor();
+            }
+        }
+        private static void ReportInitializer()
+        {
+            ReportOfUnpaidOrders reportOfUnpaidOrders = new ReportOfUnpaidOrders();
+            reportOfUnpaidOrders.GenerateReportForUnpaidOrders();
+            Console.WriteLine();
+            ReportOfClients reportOfClients = new ReportOfClients();
+            reportOfClients.GenerateReportForCustomers();
+            Console.WriteLine();
         }
     }
 }

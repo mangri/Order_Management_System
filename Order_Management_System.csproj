@@ -9,4 +9,8 @@
     <PackageReference Include="ClosedXML" Version="0.96.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Reports\" />
+  </ItemGroup>
+
 </Project>

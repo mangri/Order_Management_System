@@ -10,20 +10,17 @@ namespace Order_Management_System.Models
     public class Clientele
     {
         public string ClientID { get; set; }
-        public string ClientName { get; set; }
+        public string ClientFirstName { get; set; }
         public string ClientSurname { get; set; }
-        public string ClientAddressBlock { get; set; }
         public Clientele()
         {
 
         }
-        public Clientele(string clientID, string clientName, string clientSurname, 
-            string clientAddressBlock)
+        public Clientele(string clientID, string clientFirstName, string clientSurname)
         {
             ClientID = clientID;
-            ClientName = clientName;
+            ClientFirstName = clientFirstName;
             ClientSurname = clientSurname;
-            ClientAddressBlock = clientAddressBlock;
         }
     }
 }
