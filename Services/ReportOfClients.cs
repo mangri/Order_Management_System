@@ -13,8 +13,12 @@ namespace Order_Management_System.Services
     {
         public void GenerateReportForCustomers()
         {
-            LoadClientele loadOrders = new LoadClientele();
-            List<Clientele> clients = loadOrders.RetrieveClientListFromExcelSheet();
+            LoadClientele loadclients = new LoadClientele();
+            List<Clientele> clients = loadclients.RetrieveClientListFromExcelSheet();
+
+            LoadOrders loadOrders = new LoadOrders();
+            List<ReceivedOrderFull> orders = loadOrders.RetrieveOrderListFromExcelSheet();
+            List<string> ListOfUnpaidOrderIDs = loadOrders.RetrieveUnpaidOrderIDsFromExcelSheet();
 
             string pathCustomers = "C:\\Users\\mangri\\source\\repos\\OrderManagementSystem\\" +
                 "Order_Management_System\\Reports\\CustomerSummary\\";
@@ -24,35 +28,43 @@ namespace Order_Management_System.Services
             fsCustomers.Close();
 
             Console.WriteLine(" ****/ REPORT ON CUSTOMERS /****");
-            Console.WriteLine(" --------------------------------------------------------");
-            string customersTitle = String.Format(" {0, -15}| {1, -15}| {2, -20}| {3:0.00} ",
-                "Customer ID", "Client first name", "Client last name", "Client debt");
+            Console.WriteLine(" ----------------------------------------------------------------");
+            string customersTitle = String.Format(" {0, -15}| {1, -13}| {2, -19}| {3:0.00} ",
+                "Customer ID", "First name", "Last name", "Unpaid bills");
             Console.WriteLine(customersTitle);
-            Console.WriteLine(" --------------------------------------------------------");
+            Console.WriteLine(" ----------------------------------------------------------------");
             using (StreamWriter sw = File.AppendText(pathCustomers + fileNameCustomers))
             {
                 sw.WriteLine(" ****/ REPORT ON CUSTOMERS /****");
-                sw.WriteLine(" --------------------------------------------------------");
+                sw.WriteLine(" ----------------------------------------------------------------");
                 sw.WriteLine(customersTitle);
-                sw.WriteLine(" --------------------------------------------------------");
+                sw.WriteLine(" ----------------------------------------------------------------");
             }
-            decimal clientDebt;
+            decimal unpaidBills;
             foreach (var client in clients)
             {
-                clientDebt = 0;
-                string customerOutput = String.Format(" {0, -15}| {1, -15}| {2, -20}| {3:0.00} ",
-                    client.ClientID, client.ClientFirstName, client.ClientSurname, clientDebt);
+                unpaidBills = 0;
+                for(int i = 0; i < ListOfUnpaidOrderIDs.Count; i++)
+                {
+                    if(orders.Where(c => c.OrderID == ListOfUnpaidOrderIDs[i]).First().ClientID == client.ClientID)
+                    {
+                        unpaidBills++;
+                    }
+                }
+                
+                string customerOutput = String.Format(" {0, -15}| {1, -13}| {2, -19}| {3} ",
+                    client.ClientID, client.ClientFirstName, client.ClientSurname, unpaidBills);
                 Console.WriteLine(customerOutput);
                 using (StreamWriter sw = File.AppendText(pathCustomers + fileNameCustomers))
                 {
                     sw.WriteLine(customerOutput);
                 }
             }
-            Console.WriteLine(" --------------------------------------------------------");
+            Console.WriteLine(" ----------------------------------------------------------------");
             Console.WriteLine(" ****/ END OF REPORT ON CUSTOMERS /****");
             using (StreamWriter sw = File.AppendText(pathCustomers + fileNameCustomers))
             {
-                sw.WriteLine(" --------------------------------------------------------");
+                sw.WriteLine(" ----------------------------------------------------------------");
                 sw.WriteLine(" ****/ END OF REPORT ON CUSTOMERS/****");
             }
         }

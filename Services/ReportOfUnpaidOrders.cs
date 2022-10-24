@@ -29,7 +29,7 @@ namespace Order_Management_System.Services
             Console.WriteLine(" ****/ REPORT FOR UNPAID ORDERS /****");
             Console.WriteLine(" --------------------------------------------------------");
             string unpaidOrdersTitle = String.Format(" {0, -10}| {1, -11}| {2, -13}| {3, -7}| {4:0.00} ",
-                "Order ID", "Client ID", "Product code", "Amount", "Price");
+                "Order ID", "Client ID", "Product code", "Units", "Price/unit");
             Console.WriteLine(unpaidOrdersTitle);
             Console.WriteLine(" --------------------------------------------------------");
             using (StreamWriter sw = File.AppendText(pathUnpaid + fileNameUnpaid))
