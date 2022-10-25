@@ -40,7 +40,7 @@ namespace Order_Management_System.Services
                 sw.WriteLine(customersTitle);
                 sw.WriteLine(" ----------------------------------------------------------------");
             }
-            decimal unpaidBills;
+            int unpaidBills;
             foreach (var client in clients)
             {
                 unpaidBills = 0;

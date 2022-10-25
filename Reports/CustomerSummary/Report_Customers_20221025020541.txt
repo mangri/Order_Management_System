@@ -1,0 +1,13 @@
+ ****/ REPORT ON CUSTOMERS /****
+ ----------------------------------------------------------------
+ Customer ID    | First name   | Last name          | Unpaid bills 
+ ----------------------------------------------------------------
+ man1234her     | Mantas       | Herkus             | 0 
+ kar2345mar     | Karl         | Marx               | 0 
+ sig3456fre     | Sigmund      | Freud              | 2 
+ osc4567wil     | Oscar        | Wilde              | 0 
+ ant5678sme     | Antanas      | Smetona            | 1 
+ man0000gri     | Mantas       | Grigalavicius      | 1 
+ sig2859fre     | Sigmund      | Freud              | 0 
+ ----------------------------------------------------------------
+ ****/ END OF REPORT ON CUSTOMERS/****
